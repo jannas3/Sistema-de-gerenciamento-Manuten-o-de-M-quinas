@@ -1,0 +1,36 @@
+# 🏗️ Etapa 1: build
+FROM node:18 AS build
+
+WORKDIR /app
+
+# Copia os arquivos de dependências
+COPY package*.json ./
+
+# Instala as dependências
+RUN npm install
+
+# Copia o restante do código
+COPY . .
+
+# Compila o TypeScript
+RUN npm run build
+
+# Gera o Prisma Client
+RUN npx prisma generate
+
+# 🏃 Etapa 2: produção
+FROM node:18 AS production
+
+WORKDIR /app
+
+# Copia apenas o necessário da etapa de build
+COPY package*.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/prisma ./prisma
+
+# Expõe a porta da API
+EXPOSE 3000
+
+# Comando para iniciar a API
+CMD ["node", "dist/server.js"]

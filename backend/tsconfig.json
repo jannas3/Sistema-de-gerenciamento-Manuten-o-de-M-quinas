@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                             /* Para Node moderno */
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./dist",                              /* Saída dos arquivos compilados */
+    "rootDir": "./src",                              /* Onde estão os arquivos fontes */
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,                       /* Permite importar JSON */
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,                               /* Gera sourcemaps para debug */
+    "noImplicitAny": false                           /* (opcional) Para aliviar regras de tipagem */
+  },
+  "include": ["src"],                                /* Inclui a pasta src */
+  "exclude": ["node_modules", "dist"]                /* Ignora essas pastas */
+}
