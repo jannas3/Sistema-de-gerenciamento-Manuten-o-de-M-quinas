@@ -1,28 +1,25 @@
 import * as React from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
-import { getMachines } from '../services/machineService';
+import { getMachines, Machine } from '../services/machineService';
 
 export default function CustomizedDataGrid() {
-  const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState<Machine[]>([]);
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nome', width: 200 },
-    { field: 'type', headerName: 'Tipo', width: 150 },
+    { field: 'nome', headerName: 'Nome', width: 200 },
+    { field: 'tipo', headerName: 'Tipo', width: 150 },
     { field: 'status', headerName: 'Status', width: 130 },
-    { field: 'createdAt', headerName: 'Cadastrado em', width: 180 },
+    { field: 'criadoEm', headerName: 'Cadastrado em', width: 180 },
   ];
 
   useEffect(() => {
     const fetchData = async () => {
       const data = await getMachines();
-      const formatted = data.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        type: item.type,
-        status: item.status,
-        createdAt: new Date(item.createdAt).toLocaleDateString(),
+      const formatted = data.map((item: Machine) => ({
+        ...item,
+        criadoEm: new Date(item.criadoEm).toLocaleDateString(),
       }));
       setRows(formatted);
     };
@@ -38,6 +35,7 @@ export default function CustomizedDataGrid() {
       checkboxSelection
       autoHeight
       density="compact"
+      disableRowSelectionOnClick
     />
   );
 }

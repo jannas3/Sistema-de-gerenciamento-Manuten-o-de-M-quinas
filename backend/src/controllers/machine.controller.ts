@@ -24,15 +24,15 @@ export class MachineController {
   };
 
   create = async (req: Request, res: Response) => {
-    const { name, type, status } = req.body;
+    const { nome, tipo, status } = req.body;
 
-    if (!name || !type) {
+    if (!nome || !tipo) {
       res.status(400).json({ message: 'Nome e tipo são obrigatórios' });
       return;
     }
 
     const machine = await prisma.machine.create({
-      data: { name, type, status },
+      data: { nome, tipo, status },
     });
 
     res.status(201).json(machine);
@@ -40,12 +40,12 @@ export class MachineController {
 
   update = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { name, type, status } = req.body;
+    const { nome, tipo, status } = req.body;
 
     try {
       const machine = await prisma.machine.update({
         where: { id: Number(id) },
-        data: { name, type, status },
+        data: { nome, tipo, status },
       });
 
       res.json(machine);

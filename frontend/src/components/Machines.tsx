@@ -48,6 +48,7 @@ export default function Machines() {
       await createMachine(data);
     }
     fetchMachines();
+    setOpenForm(false);
   };
 
   const handleDelete = async (id: number) => {
@@ -57,14 +58,16 @@ export default function Machines() {
 
   const columns: GridColDef[] = [
     { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'name', headerName: 'Nome', width: 200 },
-    { field: 'type', headerName: 'Tipo', width: 150 },
+    { field: 'nome', headerName: 'Nome', width: 200 },
+    { field: 'tipo', headerName: 'Tipo', width: 150 },
     { field: 'status', headerName: 'Status', width: 120 },
-    { field: 'createdAt', headerName: 'Criado em', width: 200 },
+    { field: 'criadoEm', headerName: 'Criado em', width: 200 },
     {
       field: 'actions',
       headerName: 'Ações',
       width: 200,
+      sortable: false,
+      filterable: false,
       renderCell: (params) => (
         <Stack direction="row" spacing={1}>
           <Button
@@ -102,6 +105,7 @@ export default function Machines() {
         columns={columns}
         pageSizeOptions={[5, 10, 20]}
         checkboxSelection
+        disableRowSelectionOnClick
       />
       <MachineForm
         open={openForm}

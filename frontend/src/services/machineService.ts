@@ -2,10 +2,10 @@ import api from './api';
 
 export interface Machine {
   id?: number;
-  name: string;
-  type: string;
+  nome: string;
+  tipo: string;
   status: string;
-  createdAt?: string;
+  criadoEm?: string;
 }
 
 // Listar todas as máquinas
@@ -15,7 +15,7 @@ export const getMachines = async () => {
 };
 
 // Criar uma máquina
-export const createMachine = async (data: Omit<Machine, 'id' | 'createdAt'>) => {
+export const createMachine = async (data: Omit<Machine, 'id' | 'criadoEm'>) => {
   const response = await api.post('/machines', data);
   return response.data;
 };
@@ -27,7 +27,7 @@ export const getMachineById = async (id: number) => {
 };
 
 // Atualizar
-export const updateMachine = async (id: number, data: Omit<Machine, 'id' | 'createdAt'>) => {
+export const updateMachine = async (id: number, data: Omit<Machine, 'id' | 'criadoEm'>) => {
   const response = await api.put(`/machines/${id}`, data);
   return response.data;
 };

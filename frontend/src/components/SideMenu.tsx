@@ -11,7 +11,7 @@ import MenuContent from './MenuContent';
 import CardAlert from './CardAlert';
 import OptionsMenu from './OptionsMenu';
 
-const drawerWidth = 240;
+const drawerWidth = 240; // ✅ Aumentei a largura aqui
 
 const Drawer = styled(MuiDrawer)({
   width: drawerWidth,

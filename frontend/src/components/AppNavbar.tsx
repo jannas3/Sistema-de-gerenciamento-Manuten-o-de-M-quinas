@@ -14,12 +14,12 @@ import ColorModeIconDropdown from '.././theme/ColorModeIconDropdown';
 
 const Toolbar = styled(MuiToolbar)({
   width: '100%',
-  padding: '12px',
+  padding: '20px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'start',
   justifyContent: 'center',
-  gap: '12px',
+  gap: '16px',
   flexShrink: 0,
   [`& ${tabsClasses.flexContainer}`]: {
     gap: '8px',
@@ -64,9 +64,14 @@ export default function AppNavbar() {
             sx={{ justifyContent: 'center', mr: 'auto' }}
           >
             <CustomIcon />
-            <Typography variant="h4" component="h1" sx={{ color: 'text.primary' }}>
-              Dashboard
-            </Typography>
+            <Typography
+  variant="h3" // 👉 ou h2 se quiser maior
+  component="h1"
+  sx={{ color: 'text.primary', fontSize: '2rem' }} // 👉 controla manualmente o tamanho
+>
+  Dashboard
+</Typography>
+
           </Stack>
           <ColorModeIconDropdown />
           <MenuButton aria-label="menu" onClick={toggleDrawer(true)}>

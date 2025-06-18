@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { machineRouter } from './routes/machine.routes';
 
-import maintenanceRouter from './routes/maintenance.routes';
+import { maintenanceRouter } from './routes/maintenance.routes';
 
 const app = express();
 
@@ -11,6 +11,7 @@ app.use(express.json());
 
 // Rotas
 app.use('/api/machines', machineRouter);
-app.use('/api/maintenances', maintenanceRouter); // 🚀 Adiciona aqui
+app.use('/api/maintenances', maintenanceRouter);
+
 
 export default app;

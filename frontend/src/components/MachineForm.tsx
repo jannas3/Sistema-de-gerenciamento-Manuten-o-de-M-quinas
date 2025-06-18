@@ -1,4 +1,16 @@
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  MenuItem,
+  Select,
+  TextField,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 import { useState, useEffect } from 'react';
 import { Machine } from '../services/machineService';
 
@@ -9,54 +21,76 @@ interface Props {
   initialData?: Machine | null;
 }
 
+const machineTypes = ['PC', 'LAPTOP', 'SERVIDOR', 'IMPRESSORA', 'SCANNER', 'OUTRO'];
+const statuses = ['ATIVA', 'PENDENTE', 'INATIVA', 'MANUTENCAO'];
+
 export default function MachineForm({ open, onClose, onSubmit, initialData }: Props) {
-  const [name, setName] = useState('');
-  const [type, setType] = useState('');
-  const [status, setStatus] = useState('Ativa');
+  const [nome, setNome] = useState('');
+  const [tipo, setTipo] = useState('');
+  const [status, setStatus] = useState('ATIVA');
 
   useEffect(() => {
     if (initialData) {
-      setName(initialData.name);
-      setType(initialData.type);
+      setNome(initialData.nome);
+      setTipo(initialData.tipo);
       setStatus(initialData.status);
     } else {
-      setName('');
-      setType('');
-      setStatus('Ativa');
+      setNome('');
+      setTipo('');
+      setStatus('ATIVA');
     }
   }, [initialData]);
 
   const handleSubmit = () => {
-    onSubmit({ name, type, status });
+    if (!nome || !tipo || !status) {
+      alert('Preencha todos os campos.');
+      return;
+    }
+    onSubmit({ nome, tipo, status });
     onClose();
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>{initialData ? 'Editar Máquina' : 'Cadastrar Máquina'}</DialogTitle>
       <DialogContent>
-        <Box display="flex" flexDirection="column" gap={2} sx={{ mt: 1 }}>
+        <Box display="flex" flexDirection="column" gap={3} sx={{ mt: 1 }}>
           <TextField
-            label="Nome"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            label="Nome da Máquina"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
             fullWidth
             required
           />
-          <TextField
-            label="Tipo"
-            value={type}
-            onChange={(e) => setType(e.target.value)}
-            fullWidth
-            required
-          />
-          <TextField
-            label="Status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-            fullWidth
-            required
-          />
+          <FormControl fullWidth required>
+            <InputLabel>Tipo</InputLabel>
+            <Select
+              value={tipo}
+              label="Tipo"
+              onChange={(e) => setTipo(e.target.value)}
+            >
+              {machineTypes.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+
+          <FormControl fullWidth required>
+            <InputLabel>Status</InputLabel>
+            <Select
+              value={status}
+              label="Status"
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              {statuses.map((s) => (
+                <MenuItem key={s} value={s}>
+                  {s}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Box>
       </DialogContent>
       <DialogActions>
